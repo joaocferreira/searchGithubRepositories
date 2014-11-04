@@ -1,0 +1,47 @@
+body {
+  background-color: #D6D8E8; 
+    height: auto;
+	text-align: center;
+}
+  
+.repo {
+list-style: none;
+width: 70%;
+margin: 0 auto;
+text-align: left;
+}
+
+.repo  span{
+color:#4A56C4;
+}
+
+.repo  img{
+height:60px;
+width: 60px;
+}
+
+.infoText{
+padding:5px 30px;
+margin:1px;
+float:left;
+}
+
+.owner{
+margin:10px;
+background-color:#CBCCD7;
+position:relative;
+z-index:1;
+float:right;
+text-align:center;
+}
+
+.owner img{
+margin: auto;
+}
+
+.count{
+width:50%;
+margin: 0 auto;
+margin-top:10px;
+text-align:center;
+}
