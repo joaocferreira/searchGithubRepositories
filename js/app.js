@@ -25,4 +25,13 @@ $scope.movePageForward = function(){
 	$scope.makeQuery($scope.actualPage);
 };
 
+$scope.goToPage = function(goPage, maxPage){
+if(goPage <= maxPage && goPage > 0){
+	$scope.makeQuery(goPage);
+	$scope.goPage = null;
+	}
+else{
+	alert("Invalid Input");
+}
+};
 });

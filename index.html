@@ -11,7 +11,7 @@
 <body>
 <div class="searchpage" ng-controller="SearchListController">
     <h1 ng-hide="results">Github Repositories Search Query</h1>
-	<form class="navbar-form" ng-submit="makeQuery(1,10)">
+	<form class="navbar-form" ng-submit="makeQuery(1)">
 		<h3>Query Parameters: </h3>
 		<label>Name: </label>
 		<input  class="form-control" ng-model="searchName" autofocus>
@@ -28,7 +28,7 @@
       <input type="radio" ng-model="searchOrder"  value="asc">
       Ascending
 	</label>
-		<button class="btn btn-success" ng-click="makeQuery()">Query!</button> 
+		<button class="btn btn-success" ng-click="makeQuery(1)">Query!</button> 
 	</form>
 	<ul>
 		<li class="repo navbar navbar-default row" ng-repeat="item in results.items">
@@ -52,12 +52,20 @@
 			</a>
 		</li>
 	</ul>
-			<nav ng-show="results">
-			  <ul class="pager">
-			    <li ng-if="actualPage > 1" ng-click="movePageBack()"><a href="">Previous</a></li>	
-			    {{actualPage}} / {{Math.ceil(results.total_count/itemsPerPage)}}   
-			    <li ng-if="actualPage < Math.ceil(results.total_count/itemsPerPage)" ng-click="movePageForward()"><a href="">Next</a></li>
-			  </ul>
+			<nav class="pageFooter" ng-show="results">
+				<div class="row">
+					<div class="col-md-4">
+			   			<button type="button" class="btn btn-default backButton" ng-if="actualPage > 1" ng-click="movePageBack()">Previous</button>	
+			    	</div>
+			    	<div class="col-md-4">
+			    		<form class="navbar-form" ng-submit="goToPage(goPage, Math.ceil(results.total_count/itemsPerPage))">
+			    			<input type="text" class="form-control page" ng-model="goPage" placeholder= {{actualPage}}/{{Math.ceil(results.total_count/itemsPerPage)}}>
+			    		</form>
+			    	</div>
+			    	<div class="col-md-4">
+			   			<button type="button" class="btn btn-default frontButton" ng-if="actualPage < Math.ceil(results.total_count/itemsPerPage)" ng-click="movePageForward()">Next</button>
+			    	</div>
+			    </div>
 			</nav>
 		</div>
 </body>
