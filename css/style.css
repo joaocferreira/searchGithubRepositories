@@ -26,6 +26,12 @@ margin:1px;
 float:left;
 }
 
+.smallInfo{
+	float: clear;
+	padding:0px 5px 0px;
+	margin:0px;
+}
+
 .owner{
 margin:10px;
 background-color:#CBCCD7;

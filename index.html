@@ -10,57 +10,55 @@
 </head>
 <body>
 <div class="searchpage" ng-controller="SearchListController">
-    <h1>Github Repositories Search Query</h1>
-	<form class="navbar-form" ng-submit="makeQuery()">
+    <h1 ng-hide="results">Github Repositories Search Query</h1>
+	<form class="navbar-form" ng-submit="makeQuery(1,10)">
 		<h3>Query Parameters: </h3>
 		<label>Name: </label>
 		<input  class="form-control" ng-model="searchName" autofocus>
-		<label>Sort by: </label>
-		<select class="btn dropdown-toggle" ng-model="searchSort" default="stars">
-			<option>stars</option>
-			<option>forks</option>
-			<option>updated</option>
-			</select>
+		<select ng-model="sortBy" class="btn dropdown-toggle">
+			<option value="stars">Stars</option>
+			<option value="forks">Forks</option>
+			<option value="updated">Updated</option>
+		</select>
+		<label class="searchOrder">
+		<input type="radio" ng-model="searchOrder" value="desc" checked>
+		Descending
+	</label>
+	<label class="searchOrder">
+      <input type="radio" ng-model="searchOrder"  value="asc">
+      Ascending
+	</label>
 		<button class="btn btn-success" ng-click="makeQuery()">Query!</button> 
 	</form>
-<form class="filter navbar-form"> 
-	<h3>Filter Parameters: </h3>
-	<label>Order by: </label>
-		<select ng-model="order" class="btn dropdown-toggle">
-			<option value="id">Id</option>
-			<option value="name">Name Repository</option>
-			<option value="owner.login">Name owner</option>
-			<option value="full_name">Full Name Repository</option>
-			<option value="size">Size</option>
-		</select>
-	<label class="searchOrder">
-		<input type="radio" ng-model="searchOrder" name="direction" checked>
-		Ascending
-	</label>
-	<label class="searchOrder">
-      <input type="radio" ng-model="searchOrder" name="direction" value="asc">
-      Descending
-	</label>
-	<input class="form-control" ng-model="filterText" placeholder=" Filter by text">
-	<div class="count" ng-show="results.total_count">
-	Showing {{filtered.length}} of {{results.total_count}}
-	</div>
-</form>
 	<ul>
-		<li class="repo navbar navbar-default row" ng-repeat="item in filtered =(results.items | filter: filterText | orderBy: order: searchOrder)">
-			<div class="infoText col-md-6">
-				<h3><span>Repository Id: </span>{{item.id}}<h3>
-				<h3><span>Name Repository: </span>{{item.name}}<h3>
-				<h3><span>Fullname Repository: </span>{{item.full_name}}<h3>
-				<h3><span>Size: </span>{{item.size}} kb<h3>
-			</div>
+		<li class="repo navbar navbar-default row" ng-repeat="item in results.items">
+			<a ng-href="{{item.html_url}}">
+				<div class="infoText col-md-6">
+					<h4><span>Repository Id: </span>{{item.id}}<h4>
+					<h4><span>Name Repository: </span>{{item.name}}<h4>
+					<h4><span>Fullname Repository: </span>{{item.full_name}}<h4>
+					<h4><span>Updated at: </span>{{item.updated_at}}<h4>
+					<h4><span>Language: </span>{{item.language}}<h4>					
+				</div>
 				<div class="owner navbar navbar-default col-md-4">
 					<h4><span>Owner: </span></h4>
 					<img  class="thumbnail" ng-src="{{item.owner.avatar_url}}">
 					<h3>{{item.owner.login}}</h3>
 				</div>
-			</div>
+				<div class="row" smallInfo>
+					<h4 class="col-md-1"><span>Forks: </span>{{item.forks_count}}<h4
+					<h4 class="col-md-1"><span>Size: </span>{{item.size}}kb<h4>
+				</div>
+			</a>
 		</li>
-	</ul></div>
+	</ul>
+			<nav ng-show="results">
+			  <ul class="pager">
+			    <li ng-if="actualPage > 1" ng-click="movePageBack()"><a href="">Previous</a></li>	
+			    {{actualPage}} / {{Math.ceil(results.total_count/itemsPerPage)}}   
+			    <li ng-if="actualPage < Math.ceil(results.total_count/itemsPerPage)" ng-click="movePageForward()"><a href="">Next</a></li>
+			  </ul>
+			</nav>
+		</div>
 </body>
 </html>
